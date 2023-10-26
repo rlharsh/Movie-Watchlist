@@ -365,6 +365,7 @@ body {
 
 .movie-data {
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .movie-details {
