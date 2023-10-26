@@ -62,14 +62,14 @@ body {
 .movie-title-box {
     position: absolute;
     display: grid;
-    grid-template-columns: 30% 1fr;
-    bottom: -5rem;
+    grid-template-columns: 7rem 1fr;
+    bottom: -4rem;
     width: 100%;
     padding: 1.8rem;
 }
 
 .movie-title {
-    align-self: center;
+    align-self: end;
     font-weight: 600;
     font-size: 1.125rem;
 }
