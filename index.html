@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <!-- Meyer Reset -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" integrity="sha512-NmLkDIU1C/C88wi324HBc+S2kLhi08PN5GDeUVVVC/BVt/9Izdsc9SVeVfA1UZbY3sHUlDSyRXhCzHfr6hmPPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./index.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ronald's Watchlist</title>
+  </head>
+  <body>
+
+    <!-- Begin Application Container -->
+    <div class="app" id="app-container">
+
+      <!-- Begin Header Content -->
+        <header class="header-container" id="app-header">
+          <h1 class="h1 header" id="app-header-slug">
+            What do you want to watch?
+          </h1>
+          <div class="search-container" id="app-search-container">
+            <input type="text" name="search" id="app-search-input" class="input search" placeholder="Search">
+            <button class="search-button" id="search-button">
+              <img class="icon" src="./assets/icons/search.svg">
+            </button>
+          </div>
+        </header>
+      <!-- End Header Content -->
+
+      <!-- Begin Main Content -->
+        <main class="main">
+          <div class="popcorn hidden" id="main-placeholder">
+            <img src="./assets/icons/popcorn.svg">
+            <p class="dark-text">Let's find something great to watch!</p>
+          </div>
+
+          <!-- TOP 10 Movies Begin -->
+          <section class="top-ten" id="top-ten"></section>
+          <!-- End TOP 10 Movies -->
+
+          <!-- Now Playing -->
+            <section class="now-playing" id="now-playing"></section>
+          <!-- End Now Playing -->
+        </main>
+      <!-- End Main Content -->
+
+      <!-- Begin Navigation Bar -->
+        <nav class="nav" id="app-nav">
+          <div class="nav-item" id="button-home">
+            <img src="./assets/icons/home.svg" alt="">
+            <p>Home</p>
+          </div>
+          <div class="nav-item" id="button-search">
+            <img src="./assets/icons/search.svg" alt="">
+            <p>Search</p>
+          </div>
+          <div class="nav-item" id="button-watchlist">
+            <img src="./assets/icons/bookmark.svg" alt="">
+            <p>Watch List</p>
+          </div>
+        </nav>
+      <!-- End Navigation Bar-->
+
+    </div>
+    <!-- End Application Container -->
+    <script src="./index.js"></script>
+  </body>
+</html>
