@@ -215,7 +215,17 @@ body {
     overflow-x: auto;
     gap: .75rem;
     overflow-y: hidden;
-    height: 4rem;
+}
+
+.cat-menu::-webkit-scrollbar {
+    display: none;
+}
+
+.top-ten {
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 .cat-button {
@@ -227,6 +237,7 @@ body {
     padding: .25rem;
     min-width: 6.8rem;
     max-height: 2.5rem;
+    padding-bottom: .25rem;
 }
 
 .cat-button--selected {
