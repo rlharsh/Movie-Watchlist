@@ -363,7 +363,9 @@ body {
     border-bottom: .25rem solid var(--background-light);
 }
 
-.movie-data {}
+.movie-data {
+    overflow-y: auto;
+}
 
 .movie-details {
     position: fixed;
@@ -376,6 +378,7 @@ body {
     width: 100%;
     overflow-y: auto;
     overflow: auto;
+    overflow-y: auto;
 }
 
 .movie-container {
