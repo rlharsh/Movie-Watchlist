@@ -63,7 +63,7 @@ body {
     position: absolute;
     display: grid;
     grid-template-columns: 7rem 1fr;
-    bottom: -4rem;
+    bottom: -5rem;
     width: 100%;
     padding: 1.8rem;
 }
