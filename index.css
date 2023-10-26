@@ -376,6 +376,7 @@ body {
     flex-direction: column;
     max-width: 100%;
     width: 100%;
+    max-height: 100vh;
     overflow-y: auto;
     overflow: auto;
     overflow-y: auto;
