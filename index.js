@@ -8,6 +8,7 @@ const UPCOMING_MOVIES_URL = 'https://api.themoviedb.org/3/movie/upcoming?languag
 const MOVIE_DATA_URL = 'https://api.themoviedb.org/3/movie/';
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/';
+let SELECTED_MOVIE = -1;
 
 const BACKDROP_SIZE = 'w300';
 const POSTER_SIZE = 'w300';
@@ -17,7 +18,14 @@ const BUTTON_NOW_PLAYING = document.getElementById('button-now-playing');
 const BUTTON_TOP_RATED = document.getElementById('button-top-rated');
 const BUTTON_POPULAR = document.getElementById('button-popular');
 
+const BUTTON_REVIEWS = document.getElementById('button-movie-reviews');
+BUTTON_REVIEWS.addEventListener('click', () => {
+    document.getElementById('movie-data').innerHTML = "";
+    getMovieReviews();
+});
+
 const nowPlayingSection = document.getElementById('app-container');
+
 
 document.addEventListener('DOMContentLoaded', async function(e) {
     document.addEventListener('scroll', function(e) {
@@ -36,7 +44,6 @@ document.addEventListener('DOMContentLoaded', async function(e) {
 
 nowPlayingSection.addEventListener('scroll', async () => {
   if (nowPlayingSection.offsetHeight + nowPlayingSection.scrollTop <= nowPlayingSection.scrollHeight) {
-    console.log("HI");
     if (currentPage < totalPages) {
       currentPage++;
       await setContainerMovies('now_playing');
@@ -73,6 +80,7 @@ NOW_PLAYING_CONTAINER.addEventListener('click', async function(event) {
     if (movieElement) {
         document.getElementById('movie-details').classList.remove('hidden');
         document.getElementById('app-container').classList.add('hidden');
+        SELECTED_MOVIE = movieElement.dataset.id;
 
         const movieData = await getIndividualMovie(movieElement.dataset.id);
         console.log(movieData);
@@ -81,11 +89,6 @@ NOW_PLAYING_CONTAINER.addEventListener('click', async function(event) {
 });
 
 function setMovieData(data) {
-    /*
-    const posterPath = movie.poster_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}${movie.poster_path}` : "./assets/icons/bookmark.svg";
-    posterElement.src = posterPath;
-    posterElement.alt = `${movie.title} Poster`;
-    */
     document.getElementById('movie-hero').style.backgroundImage = `url(${IMAGE_BASE_URL}${BACKDROP_SIZE}${data.backdrop_path})`;;
     document.getElementById('movie-detail-poster').src = `${IMAGE_BASE_URL}${POSTER_SIZE}${data.poster_path}`
     document.getElementById('movie-title').innerText = data.title;
@@ -201,6 +204,24 @@ async function searchClick(e) {
     }
 }
 
+const getMovieReviews = async () => {
+    try {
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${SELECTED_MOVIE}/reviews?language=en-US&page=1`, options);
+        if (!response.ok) {
+            throw new Error(`HTTP Error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        if (data && data.results) {
+            data.results.forEach(review => {
+                console.log(review);
+                createReviewCard(review);
+            });
+        }
+    } catch (error) {
+        console.log('Error fetching search data: ', error);
+    }
+};
+
 const getNowPlaying = async () => {
     try {
         const response = await fetch(NOW_PLAYING_URL, options);
@@ -211,11 +232,31 @@ const getNowPlaying = async () => {
 
         const data = await response.json();
         if (data && data.results) {
-            processNowPlaying(data);
+            processNowPlaying(data.results);
         }
     } catch (error) {
         console.error('Error fetching search data: ', error);
     }
+};
+
+const createReviewCard = async (reviewData) => {
+
+        console.log(reviewData);
+
+        let reviewCard = document.createElement('div');
+        const author = reviewData.author;
+        const content = reviewData.content;
+
+        const authorDisplay = document.createElement('h2');
+        authorDisplay.innerText = author;
+
+        const contentDisplay = document.createElement('p');
+        contentDisplay.innerText = content;
+
+        reviewCard.appendChild(authorDisplay);
+        reviewCard.appendChild(contentDisplay);
+        document.getElementById('movie-data').appendChild(reviewCard);
+
 };
 
 const getSearchData = async (title, page = 1) => {
