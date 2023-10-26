@@ -5,11 +5,12 @@ const NOW_PLAYING_URL = 'https://api.themoviedb.org/3/movie/now_playing?language
 const TRENDING_URL = 'https://api.themoviedb.org/3/trending/movie/day?language=en-US';
 const TOP_RATED_URL = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US';
 const UPCOMING_MOVIES_URL = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US';
+const MOVIE_DATA_URL = 'https://api.themoviedb.org/3/movie/';
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/';
 
 const BACKDROP_SIZE = 'original';
-const POSTER_SIZE = 'w342';
+const POSTER_SIZE = 'w300';
 
 const BUTTON_UPCOMING = document.getElementById('button-upcoming');
 const BUTTON_NOW_PLAYING = document.getElementById('button-now-playing');
@@ -60,6 +61,29 @@ const options = {
     }
 };
 
+document.getElementById('button-back-movie').addEventListener('click', () => {
+    document.getElementById('movie-details').classList.add('hidden');
+    document.getElementById('app-container').classList.remove('hidden');
+});
+
+const NOW_PLAYING_CONTAINER = document.getElementById('now-playing');
+NOW_PLAYING_CONTAINER.addEventListener('click', async function(event) {
+    const movieElement = event.target.closest('.movie');
+
+    if (movieElement) {
+        document.getElementById('movie-details').classList.remove('hidden');
+        document.getElementById('app-container').classList.add('hidden');
+
+        const movieData = await getIndividualMovie(movieElement.dataset.id);
+        console.log(movieData);
+        setMovieData(movieData);
+    }
+});
+
+function setMovieData(data) {
+    document.getElementById('movie-hero').style.backgroundImage = `url(${IMAGE_BASE_URL}${BACKDROP_SIZE}${data.backdrop_path})`;;
+}
+
 const clearAllButtons = () => {
     BUTTON_NOW_PLAYING.classList.remove('cat-button--selected');
     BUTTON_UPCOMING.classList.remove('cat-button--selected');
@@ -71,6 +95,7 @@ BUTTON_NOW_PLAYING.addEventListener('click', async () => {
     document.getElementById('now-playing').innerHTML = "";
     clearAllButtons();
     BUTTON_NOW_PLAYING.classList.add('cat-button--selected');
+    currentPage = 1;
     await setContainerMovies('now_playing');
 });
 
@@ -78,6 +103,7 @@ BUTTON_UPCOMING.addEventListener('click', async () => {
     document.getElementById('now-playing').innerHTML = "";
     clearAllButtons();
     BUTTON_UPCOMING.classList.add('cat-button--selected');
+    currentPage = 1;
     await setContainerMovies('upcoming');
 });
 
@@ -85,6 +111,7 @@ BUTTON_TOP_RATED.addEventListener('click', async () => {
     document.getElementById('now-playing').innerHTML = "";
     clearAllButtons();
     BUTTON_TOP_RATED.classList.add('cat-button--selected');
+    currentPage = 1;
     await setContainerMovies('top_rated');
 });
 
@@ -92,6 +119,7 @@ BUTTON_POPULAR.addEventListener('click', async () => {
     document.getElementById('now-playing').innerHTML = "";
     clearAllButtons();
     BUTTON_POPULAR.classList.add('cat-button--selected');
+    currentPage = 1;
     await setContainerMovies('popular');
 });
 
@@ -126,6 +154,21 @@ async function getMovieData(URL) {
         const data = await response.json();
         if (data && data.results) {
             totalPages = data.total_pages;
+            return data;
+        }
+    } catch (error) {
+        console.log('Error fetching data: ', error);
+    }
+}
+
+async function getIndividualMovie(ID) {
+    try {
+        const response = await fetch(`${MOVIE_DATA_URL}${ID}?language=en-US`, options);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        if (data) {
             return data;
         }
     } catch (error) {
@@ -209,6 +252,7 @@ const processMovieResults = (movies) => {
 
 const createMovieTile = (movie, type = "tile") => {
     const movieElement = document.createElement('div');
+    movieElement.dataset.id = movie.id;
     movieElement.className = 'movie';
 
     const titleElement = document.createElement('h2');
