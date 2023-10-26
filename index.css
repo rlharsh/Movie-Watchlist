@@ -365,10 +365,11 @@ body {
 
 .movie-data {
     overflow-y: auto;
-    overflow-x: hidden;
-    display: grid;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
-    width: 100%;
+    line-height: 1.6rem;
 }
 
 .review-card {
@@ -378,9 +379,8 @@ body {
         "avatar author"
         "review review";
     width: 100%;
-    padding: 2rem;
     background-color: #242A32;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .review-card img {
@@ -390,12 +390,15 @@ body {
 .review-card h2 {
     grid-area: author;
     font-weight: 500;
+    font-size: 1rem;
+    align-self: center;
 }
 
 .review-card p {
     grid-area: review;
     line-height: 1.6rem;
     text-wrap: wrap;
+    font-size: .75rem;
 }
 
 .movie-details {

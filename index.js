@@ -17,11 +17,22 @@ const BUTTON_UPCOMING = document.getElementById('button-upcoming');
 const BUTTON_NOW_PLAYING = document.getElementById('button-now-playing');
 const BUTTON_TOP_RATED = document.getElementById('button-top-rated');
 const BUTTON_POPULAR = document.getElementById('button-popular');
+const BUTTON_ABOUT_MOVIE = document.getElementById('button-movie-about');
+const BUTTON_MOVIE_CAST = document.getElementById('button-movie-cast');
 
 const BUTTON_REVIEWS = document.getElementById('button-movie-reviews');
 BUTTON_REVIEWS.addEventListener('click', () => {
+    clearAllButtons();
+    BUTTON_REVIEWS.classList.add('cat-button--selected');
     document.getElementById('movie-data').innerHTML = "";
     getMovieReviews();
+});
+BUTTON_ABOUT_MOVIE.addEventListener('click', async () => {
+    clearAllButtons();
+    BUTTON_ABOUT_MOVIE.classList.add('cat-button--selected');
+    document.getElementById('movie-data').innerHTML = "";
+    const t = await getIndividualMovie(SELECTED_MOVIE);
+    document.getElementById('movie-data').innerText = t.overview;
 });
 
 const nowPlayingSection = document.getElementById('app-container');
@@ -104,6 +115,9 @@ const clearAllButtons = () => {
     BUTTON_UPCOMING.classList.remove('cat-button--selected');
     BUTTON_TOP_RATED.classList.remove('cat-button--selected');
     BUTTON_POPULAR.classList.remove('cat-button--selected');
+    BUTTON_REVIEWS.classList.remove('cat-button--selected');
+    BUTTON_ABOUT_MOVIE.classList.remove('cat-button--selected');
+    BUTTON_MOVIE_CAST.classList.remove('cat-button--selected');
 };
 
 BUTTON_NOW_PLAYING.addEventListener('click', async () => {
@@ -213,9 +227,23 @@ const getMovieReviews = async () => {
         const data = await response.json();
         if (data && data.results) {
             data.results.forEach(review => {
-                console.log(review);
                 createReviewCard(review);
             });
+        }
+    } catch (error) {
+        console.log('Error fetching search data: ', error);
+    }
+};
+
+const getMovieDescription = async () => {
+    try {
+        const response = await fetch(`${MOVIE_DATA_URL}${SELECTED_MOVIE}?language=en-US`);
+        if (!response.ok) {
+            throw new Error(`HTTP Error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        if (data) {
+            console.log(data.results);
         }
     } catch (error) {
         console.log('Error fetching search data: ', error);
@@ -229,7 +257,6 @@ const getNowPlaying = async () => {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
         const data = await response.json();
         if (data && data.results) {
             processNowPlaying(data.results);
@@ -292,7 +319,7 @@ const processSearchResults = (results) => {
 
 const processNowPlaying = (movies) => {
     const CONTAINER = document.getElementById('top-ten');
-    movies.results.forEach(movie => {
+    movies.forEach(movie => {
         const movieElement = createMovieTile(movie, "large")
         CONTAINER.appendChild(movieElement);
     });
