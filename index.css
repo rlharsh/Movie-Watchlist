@@ -39,7 +39,6 @@ body {
 }
 
 .movie-header {
-    position: relative;
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
@@ -47,10 +46,11 @@ body {
     align-items: center;
     width: 100%;
     gap: 1.5rem;
+    z-index: 12;
 }
 
 .darken {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.329), transparent);
     position: absolute;
     top: 0;
     left: 0;
@@ -59,13 +59,32 @@ body {
     border-radius: inherit;
 }
 
+.movie-information-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-box {
+    display: flex;
+    gap: .25rem;
+    padding: .75rem;
+    border-right: 1px solid var(--background-light);
+}
+
+.item-box:last-child {
+    border: none;
+}
+
 .movie-title-box {
-    position: absolute;
-    display: grid;
-    grid-template-columns: 7rem 1fr;
     bottom: -5rem;
     width: 100%;
     padding: 1.8rem;
+    display: flex;
+    gap: 1rem;
+    margin-top: -9rem;
+    z-index: 14;
 }
 
 .movie-title {
@@ -77,6 +96,33 @@ body {
 .movie-title-box img {
     max-width: 5.92rem;
     border-radius: 1rem;
+}
+
+.movie-rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .25rem;
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    color: var(--font-highlight);
+    background-color: rgba(37, 40, 54, 0.82);
+    text-align: center;
+    width: 3.4rem;
+    height: 1.5rem;
+    border-radius: .5rem;
+    padding: 1.25rem 2rem;
+}
+
+.movie-rating p {
+    margin: 0;
+    line-height: normal;
+}
+
+.movie-rating img {
+    height: 1em;
+    /* Adjust as needed */
 }
 
 .button-container-movie {
@@ -182,7 +228,7 @@ body {
 
 .movie-hero {
     position: relative;
-    min-width: 100%;
+    width: 100%;
     min-height: 13.18rem;
     border-radius: 0 0 1rem 1rem;
     background-size: cover;
@@ -193,6 +239,7 @@ body {
 
 
 .hidden {
+    visibility: hidden;
     display: none;
 }
 
@@ -320,9 +367,20 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    min-width: 100%;
     min-height: 100vh;
     background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    width: 100%;
+}
+
+.movie-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1.8rem;
+    line-height: 1.4rem;
 }
 
 @keyframes shine {

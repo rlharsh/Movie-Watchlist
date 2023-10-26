@@ -89,6 +89,11 @@ function setMovieData(data) {
     document.getElementById('movie-hero').style.backgroundImage = `url(${IMAGE_BASE_URL}${BACKDROP_SIZE}${data.backdrop_path})`;;
     document.getElementById('movie-detail-poster').src = `${IMAGE_BASE_URL}${POSTER_SIZE}${data.poster_path}`
     document.getElementById('movie-title').innerText = data.title;
+    document.getElementById('movie-year').innerText = data.release_date.substring(0, 4);
+    document.getElementById('movie-time').innerText = `${data.runtime} Minutes`;
+    document.getElementById('movie-genre').innerText = data.genres[0].name;
+    document.getElementById('film-rating').innerText = data.vote_average.toFixed(2);
+    document.getElementById('movie-data').innerText = data.overview;
 }
 
 const clearAllButtons = () => {
