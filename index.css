@@ -366,6 +366,36 @@ body {
 .movie-data {
     overflow-y: auto;
     overflow-x: hidden;
+    display: grid;
+    gap: 2rem;
+    width: 100%;
+}
+
+.review-card {
+    display: grid;
+    grid-template-columns: 2.75rem 1fr;
+    grid-template-areas:
+        "avatar author"
+        "review review";
+    width: 100%;
+    padding: 2rem;
+    background-color: #242A32;
+    gap: 1rem;
+}
+
+.review-card img {
+    grid-area: avatar;
+}
+
+.review-card h2 {
+    grid-area: author;
+    font-weight: 500;
+}
+
+.review-card p {
+    grid-area: review;
+    line-height: 1.6rem;
+    text-wrap: wrap;
 }
 
 .movie-details {

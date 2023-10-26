@@ -244,8 +244,13 @@ const createReviewCard = async (reviewData) => {
         console.log(reviewData);
 
         let reviewCard = document.createElement('div');
+        reviewCard.className = 'review-card';
+
         const author = reviewData.author;
         const content = reviewData.content;
+
+        const imageDisplay = document.createElement('img');
+        imageDisplay.src = './assets/icons/avatar.svg'
 
         const authorDisplay = document.createElement('h2');
         authorDisplay.innerText = author;
@@ -253,6 +258,7 @@ const createReviewCard = async (reviewData) => {
         const contentDisplay = document.createElement('p');
         contentDisplay.innerText = content;
 
+        reviewCard.appendChild(imageDisplay);
         reviewCard.appendChild(authorDisplay);
         reviewCard.appendChild(contentDisplay);
         document.getElementById('movie-data').appendChild(reviewCard);
