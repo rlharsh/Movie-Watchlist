@@ -364,7 +364,7 @@ body {
 }
 
 .movie-data {
-    overflow: scroll;
+    overflow: auto;
 }
 
 .movie-details {
