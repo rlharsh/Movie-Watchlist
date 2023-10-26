@@ -39,6 +39,7 @@ body {
 }
 
 .movie-header {
+    position: relative;
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
@@ -46,6 +47,36 @@ body {
     align-items: center;
     width: 100%;
     gap: 1.5rem;
+}
+
+.darken {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+}
+
+.movie-title-box {
+    position: absolute;
+    display: grid;
+    grid-template-columns: 30% 1fr;
+    bottom: -5rem;
+    width: 100%;
+    padding: 1.8rem;
+}
+
+.movie-title {
+    align-self: center;
+    font-weight: 600;
+    font-size: 1.125rem;
+}
+
+.movie-title-box img {
+    max-width: 5.92rem;
+    border-radius: 1rem;
 }
 
 .button-container-movie {
@@ -115,7 +146,7 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
     align-items: center;
-    z-index: 1;
+    z-index: 100;
 }
 
 .nav-item {
@@ -150,6 +181,7 @@ body {
 }
 
 .movie-hero {
+    position: relative;
     min-width: 100%;
     min-height: 13.18rem;
     border-radius: 0 0 1rem 1rem;

@@ -9,7 +9,7 @@ const MOVIE_DATA_URL = 'https://api.themoviedb.org/3/movie/';
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/';
 
-const BACKDROP_SIZE = 'original';
+const BACKDROP_SIZE = 'w300';
 const POSTER_SIZE = 'w300';
 
 const BUTTON_UPCOMING = document.getElementById('button-upcoming');
@@ -81,7 +81,14 @@ NOW_PLAYING_CONTAINER.addEventListener('click', async function(event) {
 });
 
 function setMovieData(data) {
+    /*
+    const posterPath = movie.poster_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}${movie.poster_path}` : "./assets/icons/bookmark.svg";
+    posterElement.src = posterPath;
+    posterElement.alt = `${movie.title} Poster`;
+    */
     document.getElementById('movie-hero').style.backgroundImage = `url(${IMAGE_BASE_URL}${BACKDROP_SIZE}${data.backdrop_path})`;;
+    document.getElementById('movie-detail-poster').src = `${IMAGE_BASE_URL}${POSTER_SIZE}${data.poster_path}`
+    document.getElementById('movie-title').innerText = data.title;
 }
 
 const clearAllButtons = () => {
