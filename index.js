@@ -4,11 +4,17 @@ const POPULAR_MOVIES_URL = `https://api.themoviedb.org/3/movie/popular`;
 const NOW_PLAYING_URL = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US';
 const TRENDING_URL = 'https://api.themoviedb.org/3/trending/movie/day?language=en-US';
 const TOP_RATED_URL = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US';
+const UPCOMING_MOVIES_URL = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US';
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/';
 
 const BACKDROP_SIZE = 'original';
 const POSTER_SIZE = 'w342';
+
+const BUTTON_UPCOMING = document.getElementById('button-upcoming');
+const BUTTON_NOW_PLAYING = document.getElementById('button-now-playing');
+const BUTTON_TOP_RATED = document.getElementById('button-top-rated');
+const BUTTON_POPULAR = document.getElementById('button-popular');
 
 const nowPlayingSection = document.getElementById('app-container');
 
@@ -36,6 +42,7 @@ nowPlayingSection.addEventListener('scroll', async () => {
     }
   }
 });
+
 /* Buttons */
 const SEARCH_BUTTON = document.getElementById('search-button');
 SEARCH_BUTTON.addEventListener('click', searchClick);
@@ -53,11 +60,45 @@ const options = {
     }
 };
 
+const clearAllButtons = () => {
+    BUTTON_NOW_PLAYING.classList.remove('cat-button--selected');
+    BUTTON_UPCOMING.classList.remove('cat-button--selected');
+    BUTTON_TOP_RATED.classList.remove('cat-button--selected');
+    BUTTON_POPULAR.classList.remove('cat-button--selected');
+};
+
+BUTTON_NOW_PLAYING.addEventListener('click', async () => {
+    document.getElementById('now-playing').innerHTML = "";
+    clearAllButtons();
+    BUTTON_NOW_PLAYING.classList.add('cat-button--selected');
+    await setContainerMovies('now_playing');
+});
+
+BUTTON_UPCOMING.addEventListener('click', async () => {
+    document.getElementById('now-playing').innerHTML = "";
+    clearAllButtons();
+    BUTTON_UPCOMING.classList.add('cat-button--selected');
+    await setContainerMovies('upcoming');
+});
+
+BUTTON_TOP_RATED.addEventListener('click', async () => {
+    document.getElementById('now-playing').innerHTML = "";
+    clearAllButtons();
+    BUTTON_TOP_RATED.classList.add('cat-button--selected');
+    await setContainerMovies('top_rated');
+});
+
+BUTTON_POPULAR.addEventListener('click', async () => {
+    document.getElementById('now-playing').innerHTML = "";
+    clearAllButtons();
+    BUTTON_POPULAR.classList.add('cat-button--selected');
+    await setContainerMovies('popular');
+});
 
 async function entryPoint() {
     //await getTrendingMovies();
     await getNowPlaying();
-    await setContainerMovies('top_rated');
+    await setContainerMovies('now_playing');
 }
 
 async function setContainerMovies(list = 'now_playing') {
@@ -65,12 +106,14 @@ async function setContainerMovies(list = 'now_playing') {
         const movieData = await getMovieData(NOW_PLAYING_URL);
         processMovieResults(movieData);
     } else if (list === "upcoming") {
-
+        const movieData = await getMovieData(UPCOMING_MOVIES_URL);
+        processMovieResults(movieData);
     } else if (list === "top_rated") {
         const movieData = await getMovieData(TOP_RATED_URL);
         processMovieResults(movieData);
     } else if (list === "popular") {
-
+        const movieData = await getMovieData(POPULAR_MOVIES_URL);
+        processMovieResults(movieData);
     }
 }
 
@@ -158,7 +201,9 @@ const processMovieResults = (movies) => {
 
     movies.results.forEach(movie => {
         const movieElement = createMovieTile(movie, "tile");
-        CONTAINER.appendChild(movieElement);
+        if (movieElement) {
+            CONTAINER.appendChild(movieElement);
+        }
     });
 };
 
@@ -171,8 +216,14 @@ const createMovieTile = (movie, type = "tile") => {
 
     const posterElement = document.createElement('img');
     posterElement.className = type === "tile" ? 'movie__image' : type === "large" ? "movie__large" : "";
-    posterElement.src = `${IMAGE_BASE_URL}${POSTER_SIZE}${movie.poster_path}`;
+    const posterPath = movie.poster_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}${movie.poster_path}` : "./assets/icons/bookmark.svg";
+    posterElement.src = posterPath;
     posterElement.alt = `${movie.title} Poster`;
+
+    if (posterPath === "./assets/icons/bookmark.svg") {
+        return undefined;
+    }
+
     movieElement.appendChild(posterElement);
 
     return movieElement;
