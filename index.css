@@ -416,7 +416,7 @@ body {
 .review-card h2 {
     grid-area: author;
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 1.2rem;
     align-self: center;
 }
 
@@ -424,7 +424,7 @@ body {
     grid-area: review;
     line-height: 1.6rem;
     text-wrap: wrap;
-    font-size: .75rem;
+    font-size: 1rem;
 }
 
 .movie-details {

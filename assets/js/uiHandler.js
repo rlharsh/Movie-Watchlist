@@ -62,7 +62,6 @@ export async function setContainerMovies(list = 'now_playing') {
 }
 
 export const createCastCard = async (cast) => {
-    console.log(cast);
     let castCard = document.createElement('div');
     castCard.className = 'cast-card';
 
