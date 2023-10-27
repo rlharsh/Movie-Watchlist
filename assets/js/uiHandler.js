@@ -4,17 +4,6 @@ import { URLS } from "./constants.js";
 import { MOVIE_DATA } from "./movieHandler.js";
 import { getIndividualMovie, getMovieReviews, getMovieCast } from "./movieHandler.js";
 
-const BUTTON_UPCOMING = document.getElementById(ELEMENT_IDS.BUTTON_UPCOMING);
-const BUTTON_NOW_PLAYING = document.getElementById(ELEMENT_IDS.BUTTON_NOW_PLAYING);
-const BUTTON_TOP_RATED = document.getElementById(ELEMENT_IDS.BUTTON_TOP_RATED);
-const BUTTON_POPULAR = document.getElementById(ELEMENT_IDS.BUTTON_POPULAR);
-const BUTTON_ABOUT_MOVIE = document.getElementById(ELEMENT_IDS.BUTTON_ABOUT_MOVIE);
-const BUTTON_MOVIE_CAST = document.getElementById(ELEMENT_IDS.BUTTON_CAST);
-const NOW_PLAYING_CONTAINER = document.getElementById(ELEMENT_IDS.NOW_PLAYING_CONTAINER);
-const BUTTON_REVIEWS = document.getElementById(ELEMENT_IDS.BUTTON_MOVIE_REVIEWS);
-const MOVIE_DATA_CONTAINER = document.getElementById(ELEMENT_IDS.MOVIE_DATA_CONTAINER);
-const SEARCH_BUTTON = document.getElementById(ELEMENT_IDS.SEARCH_BUTTON);
-const BACK_BUTTON = document.getElementById(ELEMENT_IDS.BACK_BUTTON);
 const APPLICATION_CONTAINER = document.getElementById(ELEMENT_IDS.APPLICATION_CONTAINER);
 const MOVIE_DETAILS = document.getElementById(ELEMENT_IDS.MOVIE_DETAILS);
 const SEARCH_CONTAINER = document.getElementById(ELEMENT_IDS.SEARCH_RESULTS_CONTAINER);

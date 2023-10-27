@@ -20,7 +20,8 @@ export const ELEMENT_IDS = {
     MOVIE_DETAILS: 'movie-details',
     BUTTON_CAST: 'button-movie-cast',
     SEARCH_RESULTS_CONTAINER: 'search-results',
-    SEARCH_RESULTS_DATA: 'search-information-container'
+    SEARCH_RESULTS_DATA: 'search-information-container',
+    BUTTON_BOOKMARK: 'button-add-bookmark'
 }
 
 export const URLS = {
