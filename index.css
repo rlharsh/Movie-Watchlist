@@ -54,6 +54,9 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    max-width: 7rem;
+    justify-content: center;
 }
 
 .cast-card p {
@@ -63,6 +66,7 @@ body {
 .cast-card p:first-of-type {
     font-weight: 500;
     margin-top: 1rem;
+    max-width: 6.5rem;
 }
 
 .character {
@@ -70,8 +74,8 @@ body {
 }
 
 .cast-card img {
-    width: 12.25rem;
-    height: 12.25rem;
+    width: 6.25rem;
+    height: 6.25rem;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -393,9 +397,11 @@ body {
 .movie-data {
     padding: 1.5rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 4rem;
     line-height: 1.6rem;
+    justify-content: center;
 }
 
 .review-card {

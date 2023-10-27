@@ -1,7 +1,7 @@
 export const IMAGE_CONFIG = {
     BASE_URL: 'https://image.tmdb.org/t/p/',
-    BACKDROP_SIZE: 'w300',
-    POSTER_SIZE: 'w300'
+    BACKDROP_SIZE: 'w780',
+    POSTER_SIZE: 'original'
 }
 
 export const ELEMENT_IDS = {
