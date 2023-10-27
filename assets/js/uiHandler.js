@@ -1,4 +1,4 @@
-import { IMAGE_CONFIG } from "./constants.js";
+import { ELEMENT_IDS, IMAGE_CONFIG } from "./constants.js";
 import { getMovieData } from "./movieHandler.js";
 import { URLS } from "./constants.js";
 import { MOVIE_DATA } from "./movieHandler.js";
@@ -121,7 +121,62 @@ export const processMovieResults = (movies) => {
 };
 
 export const processSearchResults = (results) => {
-    console.log('Search Results:', results);
+    results.forEach(movie => {
+        createSearchCard(movie);
+    });
+};
+
+export const createSearchCard = (movie) => {
+    console.log(movie);
+    const searchCard = document.createElement('div');
+    searchCard.className = 'search-card';
+
+    const searchCardImageContainer = document.createElement('div');
+    const searchCardImage = document.createElement('img');
+
+    const posterPath = movie.poster_path ? `${IMAGE_CONFIG.BASE_URL}${IMAGE_CONFIG.POSTER_SIZE}${movie.poster_path}` : "./assets/icons/bookmark.svg";
+    searchCardImage.src = posterPath;
+    searchCardImage.alt = `${movie.title} Poster`;
+    searchCardImageContainer.appendChild(searchCardImage);
+
+    const movieInformation = document.createElement('div');
+    movieInformation.className = 'movie-information';
+
+    const movieTitle = document.createElement('h2');
+    movieTitle.classList.add('h2');
+    movieTitle.innerText = movie.title;
+
+    const ratingContainer = document.createElement('div');
+    ratingContainer.className = 'general-row';
+
+    const starImage = document.createElement('img');
+    starImage.src = './assets/icons/star.svg';
+    ratingContainer.appendChild(starImage);
+
+    const ratingText = document.createElement('p');
+    ratingText.className = 'accent-text';
+    ratingText.innerText = movie.vote_average.toFixed(2);
+    ratingContainer.appendChild(ratingText);
+
+    const releaseYearContianer = document.createElement('div');
+    releaseYearContianer.className = 'general-row';
+
+    const calendarImage = document.createElement('img');
+    calendarImage.src = './assets/icons/ticket.svg';
+    releaseYearContianer.appendChild(calendarImage);
+
+    const releaseYearText = document.createElement('p');
+    releaseYearText.innerText = movie.release_date.substring(0, 4);
+    releaseYearContianer.appendChild(releaseYearText);
+
+    movieInformation.appendChild(movieTitle);
+    movieInformation.appendChild(ratingContainer);
+    movieInformation.appendChild(releaseYearContianer);
+
+    searchCard.appendChild(searchCardImageContainer);
+    searchCard.appendChild(movieInformation);
+
+    document.getElementById(ELEMENT_IDS.SEARCH_RESULTS_DATA).appendChild(searchCard);
 };
 
 // Setup UI slider (now playing)

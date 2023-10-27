@@ -80,22 +80,6 @@
       </main>
       <!-- End Main Content -->
 
-      <!-- Begin Navigation Bar -->
-      <nav class="nav" id="app-nav">
-        <div class="nav-item" id="button-home">
-          <img src="./assets/icons/home.svg" alt="" />
-          <p>Home</p>
-        </div>
-        <div class="nav-item" id="button-search">
-          <img src="./assets/icons/search.svg" alt="" />
-          <p>Search</p>
-        </div>
-        <div class="nav-item" id="button-watchlist">
-          <img src="./assets/icons/bookmark.svg" alt="" />
-          <p>Watch List</p>
-        </div>
-      </nav>
-      <!-- End Navigation Bar-->
     </div>
     <!-- Begin Movie Details -->
     <div class="movie-details hidden" id="movie-details">
@@ -150,6 +134,41 @@
 
       </div>
     </div>
+
+    <!-- Begin Movie Details -->
+    <div class="search-results hidden" id="search-results">
+      <header class="movie-header" id="movie-header">
+        <div class="button-container-movie">
+          <button class="button" id="button-back-movie">
+            <img src="./assets/icons/left-arrow.svg" />
+          </button>
+          <h1>Search</h1>
+          <button class="button" id="button-add-bookmark">
+            <img src="./assets/icons/bookmark.svg" alt="" />
+          </button>
+        </div>
+      </header>
+      <div class="search-information-container" id="search-information-container">
+
+      </div>
+    </div>
+
+          <!-- Begin Navigation Bar -->
+          <nav class="nav" id="app-nav">
+            <div class="nav-item" id="button-home">
+              <img src="./assets/icons/home.svg" alt="" />
+              <p>Home</p>
+            </div>
+            <div class="nav-item" id="button-search">
+              <img src="./assets/icons/search.svg" alt="" />
+              <p>Search</p>
+            </div>
+            <div class="nav-item" id="button-watchlist">
+              <img src="./assets/icons/bookmark.svg" alt="" />
+              <p>Watch List</p>
+            </div>
+          </nav>
+          <!-- End Navigation Bar-->
     <!-- End Application Container -->
     <script type="module" src="./index.js"></script>
   </body>

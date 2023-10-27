@@ -18,7 +18,9 @@ export const ELEMENT_IDS = {
     SEARCH_BUTTON: 'search-button',
     BACK_BUTTON: 'button-back-movie',
     MOVIE_DETAILS: 'movie-details',
-    BUTTON_CAST: 'button-movie-cast'
+    BUTTON_CAST: 'button-movie-cast',
+    SEARCH_RESULTS_CONTAINER: 'search-results',
+    SEARCH_RESULTS_DATA: 'search-information-container'
 }
 
 export const URLS = {

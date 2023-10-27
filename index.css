@@ -427,7 +427,8 @@ body {
     font-size: 1rem;
 }
 
-.movie-details {
+.movie-details,
+.search-results {
     position: fixed;
     top: 0;
     left: 0;
@@ -438,6 +439,8 @@ body {
     width: 100%;
     max-height: 100vh;
     overflow-y: auto;
+    min-height: 100vh;
+    padding-bottom: 6rem;
 }
 
 .movie-container {
@@ -446,6 +449,37 @@ body {
     gap: 2rem;
     padding: 1.8rem;
     line-height: 1.4rem;
+}
+
+.search-card {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.general-row {
+    display: flex;
+    gap: .5rem;
+}
+
+.general-row:first-of-type {
+    margin-top: 1rem;
+}
+
+.movie-information {
+    display: flex;
+    flex-direction: column;
+    gap: .28rem;
+}
+
+.accent-text {
+    color: var(--font-highlight);
+}
+
+.search-card img {
+    max-width: 7.5rem;
+    border-radius: 1rem;
 }
 
 @keyframes shine {

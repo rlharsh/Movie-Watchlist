@@ -21,8 +21,8 @@ export const getSearchData = async (title, page = 1) => {
 
         const data = await response.json();
         if (data && data.results) {
-            currentPage = data.page;
-            totalPages = data.total_pages;
+            //currentPage = data.page;
+            //totalPages = data.total_pages;
             return data.results;
         } else {
             console.log('No results found');
