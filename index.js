@@ -93,7 +93,7 @@ BUTTON_NOW_PLAYING.addEventListener('click', async () => {
     document.getElementById('now-playing').innerHTML = "";
     clearAllButtons();
     BUTTON_NOW_PLAYING.classList.add('cat-button--selected');
-    currentPage = 1;
+    MOVIE_DATA.CURRENT_PAGE = 1;
     await setContainerMovies('now_playing');
 });
 
@@ -102,7 +102,7 @@ BUTTON_UPCOMING.addEventListener('click', async () => {
     document.getElementById('now-playing').innerHTML = "";
     clearAllButtons();
     BUTTON_UPCOMING.classList.add('cat-button--selected');
-    currentPage = 1;
+    MOVIE_DATA.CURRENT_PAGE  = 1;
     await setContainerMovies('upcoming');
 });
 
@@ -111,7 +111,7 @@ BUTTON_TOP_RATED.addEventListener('click', async () => {
     document.getElementById('now-playing').innerHTML = "";
     clearAllButtons();
     BUTTON_TOP_RATED.classList.add('cat-button--selected');
-    currentPage = 1;
+    MOVIE_DATA.CURRENT_PAGE  = 1;
     await setContainerMovies('top_rated');
 });
 
@@ -120,7 +120,7 @@ BUTTON_POPULAR.addEventListener('click', async () => {
     document.getElementById('now-playing').innerHTML = "";
     clearAllButtons();
     BUTTON_POPULAR.classList.add('cat-button--selected');
-    currentPage = 1;
+    MOVIE_DATA.CURRENT_PAGE  = 1;
     await setContainerMovies('popular');
 });
 

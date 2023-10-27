@@ -54,7 +54,19 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: .5rem;
+}
+
+.cast-card p {
+    font-size: 1rem;
+}
+
+.cast-card p:first-of-type {
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.character {
+    color: #0296E5;
 }
 
 .cast-card img {

@@ -74,10 +74,15 @@ export const createCastCard = async (cast) => {
     }
 
     const cardTitle = document.createElement('p');
-    cardTitle.innerText = cast.name;
+    cardTitle.innerText = cast.name.toUpperCase();
+
+    const cardTitleCharacter = document.createElement('p');
+    cardTitleCharacter.classList.add('character');
+    cardTitleCharacter.innerText = cast.character;
 
     castCard.appendChild(cardImage);
     castCard.appendChild(cardTitle);
+    castCard.appendChild(cardTitleCharacter);
     document.getElementById('movie-data').appendChild(castCard);
 
 };
