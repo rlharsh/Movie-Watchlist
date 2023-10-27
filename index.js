@@ -1,6 +1,6 @@
 import { ELEMENT_IDS } from "./assets/js/constants.js";
 import { MOVIE_DATA, getSearchData, getIndividualMovie, getMovieCast, getMovieReviews, getNowPlaying } from "./assets/js/movieHandler.js";
-import { processSearchResults, createReviewCard, setMovieData, setContainerMovies, createCastCard } from "./assets/js/uiHandler.js";
+import { processSearchResults, createReviewCard, setMovieData, setContainerMovies, createCastCard, createBookmarkCard } from "./assets/js/uiHandler.js";
 import { bookmarks } from "./assets/js/bookmarks.js";
 
 const BUTTON_UPCOMING = document.getElementById(ELEMENT_IDS.BUTTON_UPCOMING);
@@ -19,10 +19,31 @@ const MOVIE_DETAILS = document.getElementById(ELEMENT_IDS.MOVIE_DETAILS);
 const SEARCH_CONTAINER = document.getElementById(ELEMENT_IDS.SEARCH_RESULTS_CONTAINER);
 const SEARCH_RESULTS_DATA = document.getElementById(ELEMENT_IDS.SEARCH_RESULTS_DATA);
 const BUTTON_BOOKMARK = document.getElementById(ELEMENT_IDS.BUTTON_BOOKMARK);
+const BOOKMARK_VIEW = document.getElementById(ELEMENT_IDS.BUTTON_BOOKMARKS_VIEW);
+const BOOKMARK_CONTAINER = document.getElementById(ELEMENT_IDS.BOOKMARKS_CONTAINER);
+const BUTTON_BOOKMARK_BACK = document.getElementById(ELEMENT_IDS.BUTTON_BOOKMARKS_BACK);
+const BUTTON_BACK_SEARCH = document.getElementById(ELEMENT_IDS.BUTTON_BACK_SEARCH);
+
+BUTTON_BACK_SEARCH.addEventListener('click', () => {
+    SEARCH_CONTAINER.classList.add('hidden');
+    APPLICATION_CONTAINER.classList.remove('hidden');
+});
+
+BUTTON_BOOKMARK_BACK.addEventListener('click', () => {
+    MOVIE_DETAILS.classList.add('hidden');
+    APPLICATION_CONTAINER.classList.remove('hidden');
+    BOOKMARK_CONTAINER.classList.add('hidden');
+});
+
+BOOKMARK_VIEW.addEventListener('click', () => {
+    MOVIE_DETAILS.classList.add('hidden');
+    APPLICATION_CONTAINER.classList.add('hidden');
+    BOOKMARK_CONTAINER.classList.remove('hidden');
+});
 
 BUTTON_BOOKMARK.addEventListener('click', () => {
     bookmarks.movies.push(MOVIE_DATA.MOVIE_JSON);
-    console.log(bookmarks.movies);
+    createBookmarkCard(MOVIE_DATA.MOVIE_JSON);
 });
 
 // Listener for the cast button click.

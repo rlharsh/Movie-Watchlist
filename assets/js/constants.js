@@ -21,7 +21,12 @@ export const ELEMENT_IDS = {
     BUTTON_CAST: 'button-movie-cast',
     SEARCH_RESULTS_CONTAINER: 'search-results',
     SEARCH_RESULTS_DATA: 'search-information-container',
-    BUTTON_BOOKMARK: 'button-add-bookmark'
+    BUTTON_BOOKMARK: 'button-add-bookmark',
+    BOOKMARKS_CONTAINER: 'bookmarks-container',
+    BOOKMARKS_DATA_CONTAINER: 'bookmarks-information-container',
+    BUTTON_BOOKMARKS_VIEW: 'button-watchlist',
+    BUTTON_BOOKMARKS_BACK: 'button-back-bookmark',
+    BUTTON_BACK_SEARCH: 'button-back-search'
 }
 
 export const URLS = {

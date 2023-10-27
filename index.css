@@ -428,7 +428,8 @@ body {
 }
 
 .movie-details,
-.search-results {
+.search-results,
+.bookmarks {
     position: fixed;
     top: 0;
     left: 0;
