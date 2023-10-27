@@ -12,7 +12,13 @@ export const ELEMENT_IDS = {
     BUTTON_ABOUT_MOVIE: 'button-movie-about',
     BUTTON_MOVIE_CAST: 'button-movie-cast',
     BUTTON_MOVIE_REVIEWS: 'button-movie-reviews',
-    APPLICATION_CONTAINER: 'app-container'
+    APPLICATION_CONTAINER: 'app-container',
+    NOW_PLAYING_CONTAINER: 'now-playing',
+    MOVIE_DATA_CONTAINER: 'movie-data',
+    SEARCH_BUTTON: 'search-button',
+    BACK_BUTTON: 'button-back-movie',
+    MOVIE_DETAILS: 'movie-details',
+    BUTTON_CAST: 'button-movie-cast'
 }
 
 export const URLS = {

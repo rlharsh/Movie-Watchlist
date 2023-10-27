@@ -49,6 +49,21 @@ body {
     z-index: 12;
 }
 
+.cast-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+}
+
+.cast-card img {
+    width: 12.25rem;
+    height: 12.25rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 .darken {
     background: linear-gradient(to top, rgba(0, 0, 0, 0.329), transparent);
     position: absolute;
@@ -367,7 +382,7 @@ body {
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 4rem;
     line-height: 1.6rem;
 }
 
