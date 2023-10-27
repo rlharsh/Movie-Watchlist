@@ -16,6 +16,7 @@ const BACK_BUTTON = document.getElementById(ELEMENT_IDS.BACK_BUTTON);
 const APPLICATION_CONTAINER = document.getElementById(ELEMENT_IDS.APPLICATION_CONTAINER);
 const MOVIE_DETAILS = document.getElementById(ELEMENT_IDS.MOVIE_DETAILS);
 const SEARCH_CONTAINER = document.getElementById(ELEMENT_IDS.SEARCH_RESULTS_CONTAINER);
+const SEARCH_RESULTS_DATA = document.getElementById(ELEMENT_IDS.SEARCH_RESULTS_DATA);
 
 // Listener for the cast button click.
 BUTTON_MOVIE_CAST.addEventListener('click', () => {
@@ -137,6 +138,9 @@ async function searchClick(e) {
     if (e) {
         e.preventDefault();
     }
+
+    SEARCH_RESULTS_DATA.innerHTML = "";
+
     const searchTitle = SEARCH_INPUT.value;
     const searchResults = await getSearchData(searchTitle);
     SEARCH_INPUT.value = "";
