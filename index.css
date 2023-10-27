@@ -52,25 +52,27 @@ body {
 .cast-card {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     text-align: center;
-    max-width: 7rem;
-    justify-content: center;
+    max-width: 6.25rem;
+
 }
 
 .cast-card p {
     font-size: 1rem;
+    text-align: center;
 }
 
 .cast-card p:first-of-type {
     font-weight: 500;
     margin-top: 1rem;
     max-width: 6.5rem;
+    text-align: center;
 }
 
 .character {
     color: #0296E5;
+    text-align: center;
 }
 
 .cast-card img {
@@ -526,6 +528,10 @@ body {
 
     .now-playing {
         grid-template-columns: repeat(5, 1fr);
+    }
+
+    .movie-hero {
+        min-height: 50vh;
     }
 
     /* Styles */
