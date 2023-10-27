@@ -1,32 +1,22 @@
-const API_KEY = '3264a131020d738a0896d5230d569d50'; // Replace with your TMDb API key
-const SEARCH_URL = `https://api.themoviedb.org/3/search/movie`;
-const POPULAR_MOVIES_URL = `https://api.themoviedb.org/3/movie/popular`;
-const NOW_PLAYING_URL = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US';
-const TRENDING_URL = 'https://api.themoviedb.org/3/trending/movie/day?language=en-US';
-const TOP_RATED_URL = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US';
-const UPCOMING_MOVIES_URL = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US';
-const MOVIE_DATA_URL = 'https://api.themoviedb.org/3/movie/';
+import { IMAGE_CONFIG, ELEMENT_IDS, URLS } from "./assets/js/constants.js";
 
-const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/';
 let SELECTED_MOVIE = -1;
 
-const BACKDROP_SIZE = 'w300';
-const POSTER_SIZE = 'w300';
+const BUTTON_UPCOMING = document.getElementById(ELEMENT_IDS.BUTTON_UPCOMING);
+const BUTTON_NOW_PLAYING = document.getElementById(ELEMENT_IDS.BUTTON_NOW_PLAYING);
+const BUTTON_TOP_RATED = document.getElementById(ELEMENT_IDS.BUTTON_TOP_RATED);
+const BUTTON_POPULAR = document.getElementById(ELEMENT_IDS.BUTTON_POPULAR);
+const BUTTON_ABOUT_MOVIE = document.getElementById(ELEMENT_IDS.BUTTON_ABOUT_MOVIE);
+const BUTTON_MOVIE_CAST = document.getElementById(ELEMENT_IDS.BUTTON_ABOUT_MOVIE);
 
-const BUTTON_UPCOMING = document.getElementById('button-upcoming');
-const BUTTON_NOW_PLAYING = document.getElementById('button-now-playing');
-const BUTTON_TOP_RATED = document.getElementById('button-top-rated');
-const BUTTON_POPULAR = document.getElementById('button-popular');
-const BUTTON_ABOUT_MOVIE = document.getElementById('button-movie-about');
-const BUTTON_MOVIE_CAST = document.getElementById('button-movie-cast');
-
-const BUTTON_REVIEWS = document.getElementById('button-movie-reviews');
+const BUTTON_REVIEWS = document.getElementById(ELEMENT_IDS.BUTTON_MOVIE_REVIEWS);
 BUTTON_REVIEWS.addEventListener('click', () => {
     clearAllButtons();
     BUTTON_REVIEWS.classList.add('cat-button--selected');
     document.getElementById('movie-data').innerHTML = "";
     getMovieReviews();
 });
+
 BUTTON_ABOUT_MOVIE.addEventListener('click', async () => {
     clearAllButtons();
     BUTTON_ABOUT_MOVIE.classList.add('cat-button--selected');
@@ -35,10 +25,9 @@ BUTTON_ABOUT_MOVIE.addEventListener('click', async () => {
     document.getElementById('movie-data').innerText = t.overview;
 });
 
-const nowPlayingSection = document.getElementById('app-container');
+const nowPlayingSection = document.getElementById(ELEMENT_IDS.APPLICATION_CONTAINER);
 
-
-document.addEventListener('DOMContentLoaded', async function(e) {
+document.addEventListener('DOMContentLoaded', async function() {
     document.addEventListener('scroll', function(e) {
         let documentHeight = document.body.scrollHeight;
         let currentScroll = window.scrollY + window.innerHeight;
@@ -100,8 +89,8 @@ NOW_PLAYING_CONTAINER.addEventListener('click', async function(event) {
 });
 
 function setMovieData(data) {
-    document.getElementById('movie-hero').style.backgroundImage = `url(${IMAGE_BASE_URL}${BACKDROP_SIZE}${data.backdrop_path})`;;
-    document.getElementById('movie-detail-poster').src = `${IMAGE_BASE_URL}${POSTER_SIZE}${data.poster_path}`
+    document.getElementById('movie-hero').style.backgroundImage = `url(${IMAGE_CONFIG.BASE_URL}${IMAGE_CONFIG.BACKDROP_SIZE}${data.backdrop_path})`;;
+    document.getElementById('movie-detail-poster').src = `${IMAGE_CONFIG.BASE_URL}${IMAGE_CONFIG.POSTER_SIZE}${data.poster_path}`
     document.getElementById('movie-title').innerText = data.title;
     document.getElementById('movie-year').innerText = data.release_date.substring(0, 4);
     document.getElementById('movie-time').innerText = `${data.runtime} Minutes`;
@@ -160,16 +149,16 @@ async function entryPoint() {
 
 async function setContainerMovies(list = 'now_playing') {
     if (list === "now_playing") {
-        const movieData = await getMovieData(NOW_PLAYING_URL);
+        const movieData = await getMovieData(URLS.NOW_PLAYING);
         processMovieResults(movieData);
     } else if (list === "upcoming") {
-        const movieData = await getMovieData(UPCOMING_MOVIES_URL);
+        const movieData = await getMovieData(URLS.UPCOMING);
         processMovieResults(movieData);
     } else if (list === "top_rated") {
-        const movieData = await getMovieData(TOP_RATED_URL);
+        const movieData = await getMovieData(URLS.TOP_RATED);
         processMovieResults(movieData);
     } else if (list === "popular") {
-        const movieData = await getMovieData(POPULAR_MOVIES_URL);
+        const movieData = await getMovieData(URLS.POPULAR_MOVIES);
         processMovieResults(movieData);
     }
 }
@@ -192,7 +181,7 @@ async function getMovieData(URL) {
 
 async function getIndividualMovie(ID) {
     try {
-        const response = await fetch(`${MOVIE_DATA_URL}${ID}?language=en-US`, options);
+        const response = await fetch(`${URLS.MOVIE_DATA}${ID}?language=en-US`, options);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -235,24 +224,9 @@ const getMovieReviews = async () => {
     }
 };
 
-const getMovieDescription = async () => {
-    try {
-        const response = await fetch(`${MOVIE_DATA_URL}${SELECTED_MOVIE}?language=en-US`);
-        if (!response.ok) {
-            throw new Error(`HTTP Error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        if (data) {
-            console.log(data.results);
-        }
-    } catch (error) {
-        console.log('Error fetching search data: ', error);
-    }
-};
-
 const getNowPlaying = async () => {
     try {
-        const response = await fetch(NOW_PLAYING_URL, options);
+        const response = await fetch(URLS.NOW_PLAYING, options);
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -294,7 +268,7 @@ const createReviewCard = async (reviewData) => {
 
 const getSearchData = async (title, page = 1) => {
     try {
-        const response = await fetch(`${SEARCH_URL}?query=${title}&language=en-US&page=${page}`, options);
+        const response = await fetch(`${URLS.SEARCH_URL}?query=${title}&language=en-US&page=${page}`, options);
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -346,7 +320,7 @@ const createMovieTile = (movie, type = "tile") => {
 
     const posterElement = document.createElement('img');
     posterElement.className = type === "tile" ? 'movie__image' : type === "large" ? "movie__large" : "";
-    const posterPath = movie.poster_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}${movie.poster_path}` : "./assets/icons/bookmark.svg";
+    const posterPath = movie.poster_path ? `${IMAGE_CONFIG.BASE_URL}${IMAGE_CONFIG.POSTER_SIZE}${movie.poster_path}` : "./assets/icons/bookmark.svg";
     posterElement.src = posterPath;
     posterElement.alt = `${movie.title} Poster`;
 
