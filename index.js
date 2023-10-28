@@ -3,66 +3,99 @@ import { MOVIE_DATA, getSearchData, getIndividualMovie, getMovieCast, getMovieRe
 import { processSearchResults, createReviewCard, setMovieData, setContainerMovies, createCastCard, createBookmarkCard } from "./assets/js/uiHandler.js";
 import { bookmarks } from "./assets/js/bookmarks.js";
 
-const BUTTON_UPCOMING = document.getElementById(ELEMENT_IDS.BUTTON_UPCOMING);
-const BUTTON_NOW_PLAYING = document.getElementById(ELEMENT_IDS.BUTTON_NOW_PLAYING);
-const BUTTON_TOP_RATED = document.getElementById(ELEMENT_IDS.BUTTON_TOP_RATED);
-const BUTTON_POPULAR = document.getElementById(ELEMENT_IDS.BUTTON_POPULAR);
-const BUTTON_ABOUT_MOVIE = document.getElementById(ELEMENT_IDS.BUTTON_ABOUT_MOVIE);
-const BUTTON_MOVIE_CAST = document.getElementById(ELEMENT_IDS.BUTTON_CAST);
-const NOW_PLAYING_CONTAINER = document.getElementById(ELEMENT_IDS.NOW_PLAYING_CONTAINER);
-const BUTTON_REVIEWS = document.getElementById(ELEMENT_IDS.BUTTON_MOVIE_REVIEWS);
-const MOVIE_DATA_CONTAINER = document.getElementById(ELEMENT_IDS.MOVIE_DATA_CONTAINER);
-const SEARCH_BUTTON = document.getElementById(ELEMENT_IDS.SEARCH_BUTTON);
-const BACK_BUTTON = document.getElementById(ELEMENT_IDS.BACK_BUTTON);
-const APPLICATION_CONTAINER = document.getElementById(ELEMENT_IDS.APPLICATION_CONTAINER);
-const MOVIE_DETAILS = document.getElementById(ELEMENT_IDS.MOVIE_DETAILS);
-const SEARCH_CONTAINER = document.getElementById(ELEMENT_IDS.SEARCH_RESULTS_CONTAINER);
-const SEARCH_RESULTS_DATA = document.getElementById(ELEMENT_IDS.SEARCH_RESULTS_DATA);
-const BUTTON_BOOKMARK = document.getElementById(ELEMENT_IDS.BUTTON_BOOKMARK);
-const BOOKMARK_VIEW = document.getElementById(ELEMENT_IDS.BUTTON_BOOKMARKS_VIEW);
-const BOOKMARK_CONTAINER = document.getElementById(ELEMENT_IDS.BOOKMARKS_CONTAINER);
-const BUTTON_BOOKMARK_BACK = document.getElementById(ELEMENT_IDS.BUTTON_BOOKMARKS_BACK);
-const BUTTON_BACK_SEARCH = document.getElementById(ELEMENT_IDS.BUTTON_BACK_SEARCH);
+const buttonHandlers = {
+    [ELEMENT_IDS.BUTTON_HOME]: handleHomeClick,
+    [ELEMENT_IDS.BUTTON_UPCOMING]: handleUpcomingClick,
+    [ELEMENT_IDS.BUTTON_NOW_PLAYING]: handleNowPlayingClick,
+    [ELEMENT_IDS.BUTTON_TOP_RATED]: handleTopRatedClick,
+    [ELEMENT_IDS.BUTTON_POPULAR]: handlePopularClick,
+    [ELEMENT_IDS.BUTTON_ABOUT_MOVIE]: handleAboutMovieClick,
+    [ELEMENT_IDS.BUTTON_MOVIE_REVIEWS]: handleReviewsClick,
+    [ELEMENT_IDS.BACK_BUTTON]: handleBackButtonClick,
+    [ELEMENT_IDS.BUTTON_BOOKMARK]: handleBookmarkClick,
+    [ELEMENT_IDS.BUTTON_BOOKMARKS_BACK]: handleBookmarkBackClick,
+    [ELEMENT_IDS.BUTTON_BACK_SEARCH]: handleButtonBackSearch,
+    [ELEMENT_IDS.BUTTON_BOOKMARKS_VIEW]: handleBookmarksViewClick,
+    [ELEMENT_IDS.SEARCH_BUTTON]: handleSearchButtonClick,
+    [ELEMENT_IDS.BUTTON_MOVIE_CAST]: handleCastButtonClick
+}
 
-BUTTON_BACK_SEARCH.addEventListener('click', () => {
-    SEARCH_CONTAINER.classList.add('hidden');
-    APPLICATION_CONTAINER.classList.remove('hidden');
-});
-
-BUTTON_BOOKMARK_BACK.addEventListener('click', () => {
-    MOVIE_DETAILS.classList.add('hidden');
-    APPLICATION_CONTAINER.classList.remove('hidden');
-    BOOKMARK_CONTAINER.classList.add('hidden');
-});
-
-BOOKMARK_VIEW.addEventListener('click', () => {
-    MOVIE_DETAILS.classList.add('hidden');
-    APPLICATION_CONTAINER.classList.add('hidden');
-    BOOKMARK_CONTAINER.classList.remove('hidden');
-});
-
-BUTTON_BOOKMARK.addEventListener('click', () => {
-    bookmarks.movies.push(MOVIE_DATA.MOVIE_JSON);
-    createBookmarkCard(MOVIE_DATA.MOVIE_JSON);
-});
-
-// Listener for the cast button click.
-BUTTON_MOVIE_CAST.addEventListener('click', () => {
-    clearAllButtons();
-    BUTTON_MOVIE_CAST.classList.add('cat-button--selected');
-    MOVIE_DATA_CONTAINER.innerHTML = "";
-
-    if (MOVIE_DATA.MOVIE_CAST.length > 0) {
-        MOVIE_DATA.MOVIE_CAST.forEach(cast => {
-            createCastCard(cast);
-        });
+async function handleSearchButtonClick(e) {
+    const SEARCH_INPUT = document.getElementById('app-search-input');
+    if (e) {
+        e.preventDefault();
     }
-});
 
-// Listener for the review button click.
-BUTTON_REVIEWS.addEventListener('click', () => {
+    SEARCH_RESULTS_DATA.innerHTML = "";
+
+    const searchTitle = SEARCH_INPUT.value;
+    const searchResults = await getSearchData(searchTitle);
+    SEARCH_INPUT.value = "";
+    if (searchResults) {
+        switchDisplay('search');
+        processSearchResults(searchResults);
+    }
+}
+
+function addEventListeners() {
+    Object.entries(buttonHandlers).forEach(([id, handler]) => {
+        const button = document.getElementById(id);
+        if (button) {
+            button.addEventListener('click', handler);
+        }
+    });
+}
+
+function handleBookmarksViewClick(e) {
+    switchDisplay('bookmark');
+}
+
+function handleHomeClick(e) {
+    switchDisplay();
+}
+
+async function handleUpcomingClick(e) {
+    document.getElementById('now-playing').innerHTML = "";
     clearAllButtons();
-    BUTTON_REVIEWS.classList.add('cat-button--selected');
+    document.getElementById(ELEMENT_IDS.BUTTON_UPCOMING).classList.add('cat-button--selected');
+    MOVIE_DATA.CURRENT_PAGE  = 1;
+    await setContainerMovies('upcoming');
+}
+
+async function handleNowPlayingClick(e) {
+    document.getElementById('now-playing').innerHTML = "";
+    clearAllButtons();
+    document.getElementById(ELEMENT_IDS.BUTTON_NOW_PLAYING).classList.add('cat-button--selected');
+    MOVIE_DATA.CURRENT_PAGE = 1;
+    await setContainerMovies('now_playing');
+}
+
+async function handleTopRatedClick(e) {
+    document.getElementById('now-playing').innerHTML = "";
+    clearAllButtons();
+    document.getElementById(ELEMENT_IDS.BUTTON_TOP_RATED).classList.add('cat-button--selected');
+    MOVIE_DATA.CURRENT_PAGE  = 1;
+    await setContainerMovies('top_rated');
+}
+
+async function handlePopularClick(e) {
+    document.getElementById('now-playing').innerHTML = "";
+    clearAllButtons();
+    document.getElementById(ELEMENT_IDS.BUTTON_POPULAR).classList.add('cat-button--selected');
+    MOVIE_DATA.CURRENT_PAGE  = 1;
+    await setContainerMovies('popular');
+}
+
+function handleAboutMovieClick(e) {
+    clearAllButtons();
+    document.getElementById(ELEMENT_IDS.BUTTON_ABOUT_MOVIE).classList.add('cat-button--selected');
+    MOVIE_DATA_CONTAINER.innerHTML = "";
+    MOVIE_DATA_CONTAINER.innerText = MOVIE_DATA.MOVIE_JSON.overview;
+}
+
+function handleReviewsClick(e) {
+    clearAllButtons();
+    document.getElementById(ELEMENT_IDS.BUTTON_MOVIE_REVIEWS).classList.add('cat-button--selected');
     MOVIE_DATA_CONTAINER.innerHTML = "";
 
     if (MOVIE_DATA.MOVIE_REVIEWS.length > 0) {
@@ -72,24 +105,68 @@ BUTTON_REVIEWS.addEventListener('click', () => {
     } else {
         console.log("NO REVIEWS");
     }
-});
+}
 
-// Listener for the about movie button click.
-BUTTON_ABOUT_MOVIE.addEventListener('click', async () => {
+function handleCastButtonClick(e) {
     clearAllButtons();
-    BUTTON_ABOUT_MOVIE.classList.add('cat-button--selected');
+    document.getElementById(ELEMENT_IDS.BUTTON_MOVIE_CAST).classList.add('cat-button--selected');
     MOVIE_DATA_CONTAINER.innerHTML = "";
-    MOVIE_DATA_CONTAINER.innerText = MOVIE_DATA.MOVIE_JSON.overview;
-});
 
-// Listener for the search button click.
-SEARCH_BUTTON.addEventListener('click', searchClick);
+    if (MOVIE_DATA.MOVIE_CAST.length > 0) {
+        MOVIE_DATA.MOVIE_CAST.forEach(cast => {
+            createCastCard(cast);
+        });
+    }
+}
 
-// Listener for the back button click.
-BACK_BUTTON.addEventListener('click', () => {
+function handleBackButtonClick(e) {
+    switchDisplay();
+}
+
+function handleBookmarkClick(e) {
+    bookmarks.movies.push(MOVIE_DATA.MOVIE_JSON);
+    createBookmarkCard(MOVIE_DATA.MOVIE_JSON);
+    switchDisplay('bookmark');
+}
+
+function handleBookmarkBackClick(e) {
+    switchDisplay();
+}
+
+function handleButtonBackSearch(e) {
+    switchDisplay();
+}
+
+function switchDisplay(section = "home") {
     MOVIE_DETAILS.classList.add('hidden');
-    APPLICATION_CONTAINER.classList.remove('hidden');
-});
+    BOOKMARK_CONTAINER.classList.add('hidden');
+    SEARCH_CONTAINER.classList.add('hidden');
+    APPLICATION_CONTAINER.classList.add('hidden');
+
+    switch (section) {
+        case "home":
+            APPLICATION_CONTAINER.classList.remove('hidden');
+            break;
+        case "details":
+            MOVIE_DETAILS.classList.remove('hidden');
+            break;
+        case "search":
+            SEARCH_CONTAINER.classList.remove('hidden');
+            break;
+        case "bookmark":
+            BOOKMARK_CONTAINER.classList.remove('hidden');
+            break;
+    }
+}
+
+const NOW_PLAYING_CONTAINER = document.getElementById(ELEMENT_IDS.NOW_PLAYING_CONTAINER);
+const MOVIE_DATA_CONTAINER = document.getElementById(ELEMENT_IDS.MOVIE_DATA_CONTAINER);
+const APPLICATION_CONTAINER = document.getElementById(ELEMENT_IDS.APPLICATION_CONTAINER);
+const MOVIE_DETAILS = document.getElementById(ELEMENT_IDS.MOVIE_DETAILS);
+const SEARCH_CONTAINER = document.getElementById(ELEMENT_IDS.SEARCH_RESULTS_CONTAINER);
+const SEARCH_RESULTS_DATA = document.getElementById(ELEMENT_IDS.SEARCH_RESULTS_DATA);
+const BOOKMARK_CONTAINER = document.getElementById(ELEMENT_IDS.BOOKMARKS_CONTAINER)
+
 
 // Listener for the movie tile click
 NOW_PLAYING_CONTAINER.addEventListener('click', async function(event) {
@@ -109,74 +186,20 @@ NOW_PLAYING_CONTAINER.addEventListener('click', async function(event) {
 
 // Clear all button highlighting.
 const clearAllButtons = () => {
-    BUTTON_NOW_PLAYING.classList.remove('cat-button--selected');
-    BUTTON_UPCOMING.classList.remove('cat-button--selected');
-    BUTTON_TOP_RATED.classList.remove('cat-button--selected');
-    BUTTON_POPULAR.classList.remove('cat-button--selected');
-    BUTTON_REVIEWS.classList.remove('cat-button--selected');
-    BUTTON_ABOUT_MOVIE.classList.remove('cat-button--selected');
-    BUTTON_MOVIE_CAST.classList.remove('cat-button--selected');
+    document.getElementById(ELEMENT_IDS.BUTTON_NOW_PLAYING).classList.remove('cat-button--selected');
+    document.getElementById(ELEMENT_IDS.BUTTON_UPCOMING).classList.remove('cat-button--selected');
+    document.getElementById(ELEMENT_IDS.BUTTON_TOP_RATED).classList.remove('cat-button--selected');
+    document.getElementById(ELEMENT_IDS.BUTTON_POPULAR).classList.remove('cat-button--selected');
+    document.getElementById(ELEMENT_IDS.BUTTON_MOVIE_REVIEWS).classList.remove('cat-button--selected');
+    document.getElementById(ELEMENT_IDS.BUTTON_ABOUT_MOVIE).classList.remove('cat-button--selected');
+    document.getElementById(ELEMENT_IDS.BUTTON_MOVIE_CAST).classList.remove('cat-button--selected');
 };
-
-// Listener for the now playing button click.
-BUTTON_NOW_PLAYING.addEventListener('click', async () => {
-    document.getElementById('now-playing').innerHTML = "";
-    clearAllButtons();
-    BUTTON_NOW_PLAYING.classList.add('cat-button--selected');
-    MOVIE_DATA.CURRENT_PAGE = 1;
-    await setContainerMovies('now_playing');
-});
-
-// Listener for the upcoming button click.
-BUTTON_UPCOMING.addEventListener('click', async () => {
-    document.getElementById('now-playing').innerHTML = "";
-    clearAllButtons();
-    BUTTON_UPCOMING.classList.add('cat-button--selected');
-    MOVIE_DATA.CURRENT_PAGE  = 1;
-    await setContainerMovies('upcoming');
-});
-
-// Listener for the top rated button click.
-BUTTON_TOP_RATED.addEventListener('click', async () => {
-    document.getElementById('now-playing').innerHTML = "";
-    clearAllButtons();
-    BUTTON_TOP_RATED.classList.add('cat-button--selected');
-    MOVIE_DATA.CURRENT_PAGE  = 1;
-    await setContainerMovies('top_rated');
-});
-
-// Listener for the popular button click.
-BUTTON_POPULAR.addEventListener('click', async () => {
-    document.getElementById('now-playing').innerHTML = "";
-    clearAllButtons();
-    BUTTON_POPULAR.classList.add('cat-button--selected');
-    MOVIE_DATA.CURRENT_PAGE  = 1;
-    await setContainerMovies('popular');
-});
 
 async function entryPoint() {
     //await getTrendingMovies();
+    addEventListeners();
     await getNowPlaying();
     await setContainerMovies('now_playing');
-}
-
-// Listener for the search button click.
-async function searchClick(e) {
-    const SEARCH_INPUT = document.getElementById('app-search-input');
-    if (e) {
-        e.preventDefault();
-    }
-
-    SEARCH_RESULTS_DATA.innerHTML = "";
-
-    const searchTitle = SEARCH_INPUT.value;
-    const searchResults = await getSearchData(searchTitle);
-    SEARCH_INPUT.value = "";
-    if (searchResults) {
-        SEARCH_CONTAINER.classList.remove('hidden');
-        APPLICATION_CONTAINER.classList.add('hidden');
-        processSearchResults(searchResults);
-    }
 }
 
 entryPoint();

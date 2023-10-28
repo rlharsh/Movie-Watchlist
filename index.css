@@ -222,7 +222,7 @@ body {
     background-color: var(--background);
 
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     justify-items: center;
     align-items: center;
     z-index: 100;
@@ -531,7 +531,11 @@ body {
     }
 
     .movie-hero {
-        min-height: 50vh;
+        min-height: 80vh;
+    }
+
+    .movie-poster {
+        min-width: 12rem;
     }
 
     /* Styles */
@@ -556,39 +560,42 @@ body {
     .top-ten>* {
         max-width: calc(9.11rem * 2.25);
     }
-}
 
-/* Medium Devices, Desktops */
-@media only screen and (min-width : 992px) {
-    /* Styles */
-}
-
-/* Large Devices, Wide Screens */
-@media only screen and (min-width : 1200px) {
-
-    /* Styles */
-
-    @media only screen and (min-width : 1440px) {
-        body {}
+    .movie-data {
+        padding: 4rem;
     }
 
-    /* Extra Large Devices, TVs and Larger */
-    @media only screen and (min-width : 1600px) {
+    /* Medium Devices, Desktops */
+    @media only screen and (min-width : 992px) {
         /* Styles */
     }
 
-    /* Styles for 4K displays */
-    @media only screen and (min-width: 2560px) {
-        .now-playing {
-            grid-template-columns: repeat(5, 1fr);
-            gap: 4rem;
+    /* Large Devices, Wide Screens */
+    @media only screen and (min-width : 1200px) {
+
+        /* Styles */
+
+        @media only screen and (min-width : 1440px) {
+            body {}
         }
 
-        .movie {
-            transition: transform 0.3s ease-in-out;
+        /* Extra Large Devices, TVs and Larger */
+        @media only screen and (min-width : 1600px) {
+            /* Styles */
+        }
 
-            &:hover {
-                transform: scale(1.05);
+        /* Styles for 4K displays */
+        @media only screen and (min-width: 2560px) {
+            .now-playing {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 4rem;
+            }
+
+            .movie {
+                transition: transform 0.3s ease-in-out;
+
+                &:hover {
+                    transform: scale(1.05);
+                }
             }
         }
-    }

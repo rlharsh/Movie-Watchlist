@@ -26,7 +26,8 @@ export const ELEMENT_IDS = {
     BOOKMARKS_DATA_CONTAINER: 'bookmarks-information-container',
     BUTTON_BOOKMARKS_VIEW: 'button-watchlist',
     BUTTON_BOOKMARKS_BACK: 'button-back-bookmark',
-    BUTTON_BACK_SEARCH: 'button-back-search'
+    BUTTON_BACK_SEARCH: 'button-back-search',
+    BUTTON_HOME: 'button-home'
 }
 
 export const URLS = {
